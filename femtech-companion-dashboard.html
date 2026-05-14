@@ -1,0 +1,1765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Companion — A Strategic Brief for an IVF & Pregnancy Intelligence Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter+Tight:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F4EDE0;
+    --bone: #EAE0CE;
+    --paper: #FBF7EE;
+    --wine: #5C1F2E;
+    --wine-soft: #7A2D3F;
+    --clay: #C97B5C;
+    --clay-soft: #E0A98C;
+    --sage: #6B7F5F;
+    --sage-soft: #A8B89B;
+    --ink: #221511;
+    --ink-soft: #5A4A40;
+    --soft: #B8A795;
+    --gold: #B8893A;
+    --rule: rgba(34, 21, 17, 0.12);
+    --rule-strong: rgba(34, 21, 17, 0.22);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Inter Tight', -apple-system, sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  body {
+    background:
+      radial-gradient(ellipse at top left, rgba(201, 123, 92, 0.08), transparent 50%),
+      radial-gradient(ellipse at bottom right, rgba(107, 127, 95, 0.06), transparent 50%),
+      var(--cream);
+    min-height: 100vh;
+  }
+
+  /* Subtle grain overlay */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.4;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9' /%3E%3CfeColorMatrix values='0 0 0 0 0.13 0 0 0 0 0.08 0 0 0 0 0.07 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    min-height: 100vh;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ============ SIDEBAR ============ */
+  aside {
+    background: var(--wine);
+    color: var(--paper);
+    padding: 44px 32px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    border-right: 1px solid rgba(0,0,0,0.1);
+  }
+
+  aside::-webkit-scrollbar { width: 4px; }
+  aside::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); }
+
+  .brand {
+    margin-bottom: 56px;
+  }
+
+  .brand-mark {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--clay-soft);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .brand-mark::before {
+    content: "";
+    width: 18px;
+    height: 1px;
+    background: var(--clay-soft);
+  }
+
+  .brand-name {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: 38px;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    font-variation-settings: "SOFT" 100, "opsz" 144;
+  }
+
+  .brand-name em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--clay-soft);
+  }
+
+  .brand-sub {
+    margin-top: 16px;
+    font-size: 13px;
+    color: rgba(244, 237, 224, 0.55);
+    line-height: 1.5;
+    max-width: 220px;
+  }
+
+  nav {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .nav-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: rgba(244, 237, 224, 0.4);
+    margin: 24px 0 12px 0;
+  }
+
+  .nav-label:first-child { margin-top: 0; }
+
+  .tab-btn {
+    background: none;
+    border: none;
+    color: rgba(244, 237, 224, 0.7);
+    text-align: left;
+    padding: 11px 14px;
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    cursor: pointer;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.25s ease;
+    position: relative;
+  }
+
+  .tab-btn:hover {
+    background: rgba(255,255,255,0.06);
+    color: var(--paper);
+  }
+
+  .tab-btn.active {
+    background: var(--paper);
+    color: var(--wine);
+    font-weight: 500;
+  }
+
+  .tab-btn .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    opacity: 0.5;
+  }
+
+  .tab-btn.active .num {
+    color: var(--clay);
+    opacity: 1;
+  }
+
+  .aside-footer {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(244, 237, 224, 0.35);
+    line-height: 1.8;
+  }
+
+  /* ============ MAIN ============ */
+  main {
+    padding: 64px 80px 96px;
+    max-width: 1180px;
+  }
+
+  .panel { display: none; animation: fadeIn 0.5s ease; }
+  .panel.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* HEAD */
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--clay);
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 28px;
+    height: 1px;
+    background: var(--clay);
+  }
+
+  h1.display {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(46px, 5.5vw, 78px);
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin-bottom: 28px;
+    font-variation-settings: "SOFT" 80, "opsz" 144;
+  }
+
+  h1.display em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--wine);
+  }
+
+  .lead {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: 22px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 720px;
+    margin-bottom: 56px;
+    font-style: italic;
+  }
+
+  h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 34px;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    margin: 56px 0 24px;
+  }
+
+  h2 em { font-style: italic; color: var(--wine); }
+
+  h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 22px;
+    color: var(--ink);
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+
+  h4 {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--clay);
+    margin-bottom: 14px;
+  }
+
+  p {
+    color: var(--ink-soft);
+    max-width: 760px;
+    margin-bottom: 16px;
+  }
+
+  p.intro { font-size: 17px; }
+
+  strong { color: var(--ink); font-weight: 600; }
+
+  /* HERO STATS */
+  .hero-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    margin: 48px 0 56px;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .stat {
+    background: var(--cream);
+    padding: 28px 24px;
+  }
+
+  .stat-num {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: 44px;
+    line-height: 1;
+    color: var(--wine);
+    letter-spacing: -0.03em;
+    margin-bottom: 6px;
+  }
+
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  /* TWO-COL TEXT */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    margin: 32px 0;
+  }
+
+  /* PAIN POINT CARDS */
+  .pain-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 32px;
+  }
+
+  .pain-card {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 28px;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+
+  .pain-card:hover {
+    border-color: var(--clay);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(92, 31, 46, 0.06);
+  }
+
+  .pain-card .idx {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--clay);
+    margin-bottom: 14px;
+    letter-spacing: 0.1em;
+  }
+
+  .pain-card h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+
+  .pain-card p {
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  /* FEATURE LIST */
+  .feature-block {
+    border-top: 1px solid var(--rule);
+    padding: 36px 0;
+    display: grid;
+    grid-template-columns: 80px 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  .feature-block:last-child { border-bottom: 1px solid var(--rule); }
+
+  .feature-num {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: 48px;
+    color: var(--wine);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .feature-body h3 {
+    font-size: 26px;
+    margin-bottom: 10px;
+  }
+
+  .feature-body .tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 12px;
+    padding: 3px 10px;
+    border: 1px solid var(--sage-soft);
+    border-radius: 100px;
+  }
+
+  .feature-body p { font-size: 15px; }
+
+  .feature-list {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .feature-list li {
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--rule);
+    font-size: 14px;
+    color: var(--ink-soft);
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+  }
+
+  .feature-list li::before {
+    content: "→";
+    color: var(--clay);
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .feature-list li:last-child { border-bottom: none; }
+
+  /* QUOTE / CALLOUT */
+  .pullquote {
+    margin: 64px 0;
+    padding: 48px 56px;
+    background: var(--wine);
+    color: var(--paper);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pullquote::before {
+    content: "“";
+    position: absolute;
+    top: -40px;
+    left: 20px;
+    font-family: 'Fraunces', serif;
+    font-size: 240px;
+    color: rgba(255,255,255,0.08);
+    line-height: 1;
+  }
+
+  .pullquote-text {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: 32px;
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+    max-width: 800px;
+    position: relative;
+    font-style: italic;
+  }
+
+  .pullquote-text em {
+    color: var(--clay-soft);
+    font-style: italic;
+  }
+
+  .pullquote-attr {
+    margin-top: 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+
+  /* IVF SPOTLIGHT */
+  .spotlight {
+    background: linear-gradient(135deg, var(--paper) 0%, var(--bone) 100%);
+    padding: 48px;
+    border: 1px solid var(--rule);
+    margin-top: 32px;
+    position: relative;
+  }
+
+  .spotlight-ribbon {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--clay);
+    padding: 5px 10px;
+    background: rgba(201,123,92,0.1);
+    border: 1px solid var(--clay-soft);
+  }
+
+  .ivf-timeline {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+    margin: 36px 0;
+    position: relative;
+  }
+
+  .timeline-step {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 18px 14px;
+    position: relative;
+  }
+
+  .timeline-step .step-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--clay);
+    margin-bottom: 6px;
+    letter-spacing: 0.12em;
+  }
+
+  .timeline-step h5 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .timeline-step p {
+    font-size: 12px;
+    margin: 0;
+    color: var(--ink-soft);
+    line-height: 1.4;
+  }
+
+  /* MVP ROADMAP */
+  .roadmap {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+    margin-top: 32px;
+  }
+
+  .phase {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 32px;
+    position: relative;
+  }
+
+  .phase:nth-child(1) { border-left: 3px solid var(--sage); }
+  .phase:nth-child(2) { border-left: 3px solid var(--clay); }
+  .phase:nth-child(3) { border-left: 3px solid var(--wine); }
+
+  .phase-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--clay);
+    margin-bottom: 12px;
+  }
+
+  .phase h3 {
+    font-size: 22px;
+    margin-bottom: 6px;
+  }
+
+  .phase .duration {
+    font-size: 13px;
+    color: var(--ink-soft);
+    font-style: italic;
+    margin-bottom: 20px;
+  }
+
+  .phase ul {
+    list-style: none;
+    margin-top: 16px;
+  }
+
+  .phase ul li {
+    font-size: 14px;
+    padding: 7px 0;
+    color: var(--ink-soft);
+    border-bottom: 1px dotted var(--rule);
+  }
+
+  .phase ul li:last-child { border-bottom: none; }
+
+  /* BUSINESS MODEL */
+  .model-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 32px;
+  }
+
+  .model-card {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 32px 28px;
+    transition: all 0.3s ease;
+  }
+
+  .model-card:hover {
+    border-color: var(--wine);
+    background: var(--wine);
+    color: var(--paper);
+  }
+
+  .model-card:hover h3,
+  .model-card:hover .model-tier,
+  .model-card:hover li { color: var(--paper); }
+
+  .model-card:hover .model-tier { color: var(--clay-soft); }
+
+  .model-tier {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--clay);
+    margin-bottom: 10px;
+    transition: color 0.3s ease;
+  }
+
+  .model-card h3 { margin-bottom: 16px; transition: color 0.3s ease; }
+
+  .model-card ul {
+    list-style: none;
+    margin-top: 14px;
+  }
+
+  .model-card ul li {
+    font-size: 13px;
+    padding: 6px 0;
+    color: var(--ink-soft);
+    transition: color 0.3s ease;
+  }
+
+  .model-card ul li::before {
+    content: "—  ";
+    color: var(--clay);
+  }
+
+  .pricing-strip {
+    display: flex;
+    gap: 1px;
+    background: var(--rule);
+    margin-top: 8px;
+    margin-bottom: 4px;
+  }
+
+  .price-block {
+    flex: 1;
+    background: var(--cream);
+    padding: 8px 12px;
+    text-align: center;
+  }
+
+  .model-card:hover .price-block { background: rgba(255,255,255,0.06); }
+
+  .price-amt {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    color: var(--wine);
+    font-weight: 500;
+  }
+
+  .model-card:hover .price-amt { color: var(--clay-soft); }
+
+  .price-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-top: 2px;
+  }
+
+  /* TECH STACK */
+  .stack-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 32px;
+    padding: 24px 0;
+    border-top: 1px solid var(--rule);
+    align-items: start;
+  }
+
+  .stack-row:last-child { border-bottom: 1px solid var(--rule); }
+
+  .stack-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--clay);
+  }
+
+  .stack-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .chip {
+    padding: 7px 14px;
+    background: var(--paper);
+    border: 1px solid var(--rule-strong);
+    font-size: 13px;
+    color: var(--ink);
+    border-radius: 100px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 400;
+  }
+
+  .chip.primary {
+    background: var(--wine);
+    color: var(--paper);
+    border-color: var(--wine);
+  }
+
+  /* RISKS */
+  .risk-list {
+    margin-top: 32px;
+  }
+
+  .risk-item {
+    display: grid;
+    grid-template-columns: 60px 1fr 1.2fr;
+    gap: 32px;
+    padding: 28px 0;
+    border-top: 1px solid var(--rule);
+    align-items: start;
+  }
+
+  .risk-item:last-child { border-bottom: 1px solid var(--rule); }
+
+  .risk-num {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--clay);
+    line-height: 1;
+  }
+
+  .risk-content h3 { font-size: 20px; margin-bottom: 6px; }
+  .risk-content p { font-size: 14px; margin: 0; }
+
+  .risk-mitigation {
+    background: rgba(107, 127, 95, 0.08);
+    border-left: 3px solid var(--sage);
+    padding: 16px 20px;
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+
+  .risk-mitigation .mit-label {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 6px;
+  }
+
+  /* BRAND NAMES */
+  .brand-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  .brand-tile {
+    aspect-ratio: 1;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    transition: all 0.3s ease;
+    cursor: default;
+  }
+
+  .brand-tile:hover {
+    background: var(--wine);
+    color: var(--paper);
+    transform: translateY(-2px);
+  }
+
+  .brand-tile:hover .brand-tile-name { color: var(--paper); }
+  .brand-tile:hover .brand-tile-mean { color: var(--clay-soft); }
+
+  .brand-tile-name {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 24px;
+    color: var(--wine);
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+    transition: color 0.3s ease;
+  }
+
+  .brand-tile-mean {
+    font-size: 11px;
+    color: var(--ink-soft);
+    text-align: center;
+    font-style: italic;
+    transition: color 0.3s ease;
+  }
+
+  /* POSITIONING */
+  .positioning {
+    margin: 48px 0;
+    padding: 56px 48px;
+    background: var(--ink);
+    color: var(--paper);
+    text-align: center;
+  }
+
+  .positioning .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--clay-soft);
+    margin-bottom: 20px;
+  }
+
+  .positioning .stmt {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: 34px;
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .positioning .stmt em {
+    font-style: italic;
+    color: var(--clay-soft);
+  }
+
+  /* SECTOR TAGS */
+  .sector-tags {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 32px;
+  }
+
+  .sector-tag {
+    padding: 10px 18px;
+    border: 1px solid var(--ink);
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 17px;
+    color: var(--ink);
+    border-radius: 100px;
+    background: transparent;
+  }
+
+  .sector-tag.accent {
+    background: var(--wine);
+    color: var(--paper);
+    border-color: var(--wine);
+  }
+
+  /* DIVIDER */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 48px 0;
+  }
+
+  /* DETAIL LINE */
+  .detail-line {
+    display: flex;
+    gap: 24px;
+    align-items: baseline;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .detail-line:last-child { border-bottom: none; }
+
+  .detail-line .key {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    min-width: 180px;
+  }
+
+  .detail-line .val {
+    color: var(--ink);
+    flex: 1;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 1100px) {
+    .layout { grid-template-columns: 260px 1fr; }
+    main { padding: 48px 48px 80px; }
+    .feature-block { grid-template-columns: 60px 1fr; }
+    .feature-block .feature-list { grid-column: 1 / -1; margin-top: 16px; }
+    .hero-grid { grid-template-columns: repeat(2, 1fr); }
+    .pain-grid { grid-template-columns: repeat(2, 1fr); }
+    .roadmap { grid-template-columns: 1fr; }
+    .model-grid { grid-template-columns: 1fr; }
+    .ivf-timeline { grid-template-columns: repeat(3, 1fr); }
+    .brand-grid { grid-template-columns: repeat(3, 1fr); }
+    .two-col { grid-template-columns: 1fr; gap: 24px; }
+  }
+
+  @media (max-width: 760px) {
+    .layout { grid-template-columns: 1fr; }
+    aside { position: relative; height: auto; padding: 32px 24px; }
+    main { padding: 40px 24px 64px; }
+    .ivf-timeline { grid-template-columns: repeat(2, 1fr); }
+    .brand-grid { grid-template-columns: repeat(2, 1fr); }
+    .pain-grid { grid-template-columns: 1fr; }
+    h1.display { font-size: 44px; }
+    .pullquote { padding: 32px 24px; }
+    .pullquote-text { font-size: 22px; }
+    .stack-row { grid-template-columns: 1fr; gap: 12px; }
+    .risk-item { grid-template-columns: 1fr; gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside>
+    <div class="brand">
+      <div class="brand-mark">Product Brief / v1.0</div>
+      <div class="brand-name">The<br><em>Companion</em></div>
+      <div class="brand-sub">A strategic outline for an intelligent IVF & pregnancy platform.</div>
+    </div>
+
+    <nav>
+      <div class="nav-label">Foundation</div>
+      <button class="tab-btn active" data-tab="overview"><span>Overview</span><span class="num">01</span></button>
+      <button class="tab-btn" data-tab="problem"><span>The Problem</span><span class="num">02</span></button>
+      <button class="tab-btn" data-tab="solution"><span>The Solution</span><span class="num">03</span></button>
+
+      <div class="nav-label">Product</div>
+      <button class="tab-btn" data-tab="features"><span>Features</span><span class="num">04</span></button>
+      <button class="tab-btn" data-tab="ivf"><span>IVF Spotlight</span><span class="num">05</span></button>
+      <button class="tab-btn" data-tab="mvp"><span>MVP Roadmap</span><span class="num">06</span></button>
+
+      <div class="nav-label">Go-to-Market</div>
+      <button class="tab-btn" data-tab="business"><span>Business Model</span><span class="num">07</span></button>
+      <button class="tab-btn" data-tab="tech"><span>Tech Stack</span><span class="num">08</span></button>
+      <button class="tab-btn" data-tab="risks"><span>Risks & Mitigation</span><span class="num">09</span></button>
+      <button class="tab-btn" data-tab="brand"><span>Brand Identity</span><span class="num">10</span></button>
+    </nav>
+
+    <div class="aside-footer">
+      Femtech · Digital Health<br>
+      Fertility · AI Healthcare
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <main>
+
+    <!-- ============ OVERVIEW ============ -->
+    <section class="panel active" id="overview">
+      <div class="eyebrow">Chapter One · Overview</div>
+      <h1 class="display">One intelligent companion <em>from IVF to childbirth.</em></h1>
+      <p class="lead">Most pregnancy apps stop at week-counters and baby-size visuals. This is a category-shifting product — built for the full fertility-to-motherhood arc, where the emotional, clinical, and logistical chaos actually lives.</p>
+
+      <div class="hero-grid">
+        <div class="stat">
+          <div class="stat-num">7</div>
+          <div class="stat-label">Pain points<br>solved</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">10</div>
+          <div class="stat-label">Product<br>modules</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">3</div>
+          <div class="stat-label">Revenue<br>streams</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">4</div>
+          <div class="stat-label">Growth<br>sectors</div>
+        </div>
+      </div>
+
+      <h2>What this isn't</h2>
+      <p>It isn't <strong>Flo</strong>. It isn't <strong>Ovia</strong>. It isn't a clinic's portal. Those products serve fragments — period tracking here, baby visuals there, scattered PDFs from labs. They miss the people who need help most: women going through IVF, first-time mothers in tier-2 and tier-3 cities, families navigating high-risk pregnancies without context.</p>
+
+      <h2>What this <em>is</em></h2>
+      <p>A single, calm, intelligent companion that holds the entire journey — from a first ovarian-stimulation injection to the third-trimester anomaly scan to an emergency call at 2 a.m. It tracks treatment, it stores reports, it teaches families, it whispers reassurance. It is the steady hand a fertility clinic cannot put in a patient's pocket and a hospital cannot send home.</p>
+
+      <div class="sector-tags">
+        <span class="sector-tag accent">FemTech</span>
+        <span class="sector-tag">Digital Health</span>
+        <span class="sector-tag">Fertility Tech</span>
+        <span class="sector-tag">AI Healthcare</span>
+      </div>
+
+      <div class="pullquote">
+        <div class="pullquote-text">The strongest angle here isn't tracking a pregnancy — it's <em>holding a treatment</em>. IVF is where the unmet need, the willingness to pay, and the clinical partnership opportunity all converge.</div>
+        <div class="pullquote-attr">— Strategic Thesis</div>
+      </div>
+    </section>
+
+    <!-- ============ PROBLEM ============ -->
+    <section class="panel" id="problem">
+      <div class="eyebrow">Chapter Two · The Problem</div>
+      <h1 class="display">Pregnancy and IVF are <em>navigated alone</em>, in fragments.</h1>
+      <p class="lead">The reality of carrying or trying to carry a child today is a thousand small confusions stacked into a fragile timeline — across hospitals, apps, family chats, and PDFs no one re-opens.</p>
+
+      <h2>The fractured experience</h2>
+      <p class="intro">Behind every pregnancy and every IVF cycle is a quiet operational nightmare. Appointments slip. Injections are mistimed. Hormone reports live in WhatsApp forwards. Husbands ask the wrong questions at the wrong time. And the women in the center of it all carry the emotional weight of remembering, interpreting, and explaining everything — to everyone.</p>
+
+      <div class="pain-grid">
+        <div class="pain-card">
+          <div class="idx">01</div>
+          <h3>Missed appointments</h3>
+          <p>Scans, doctor visits, and follow-ups slip through cracks with no unified reminder system.</p>
+        </div>
+        <div class="pain-card">
+          <div class="idx">02</div>
+          <h3>IVF cycle confusion</h3>
+          <p>Injection windows, scan timings, and hormone schedules overwhelm even diligent patients.</p>
+        </div>
+        <div class="pain-card">
+          <div class="idx">03</div>
+          <h3>Scattered reports</h3>
+          <p>Lab results, ultrasound images, and prescriptions live across hospitals, phones, and folders.</p>
+        </div>
+        <div class="pain-card">
+          <div class="idx">04</div>
+          <h3>Unaligned families</h3>
+          <p>Husbands and family members are out of sync with treatment, leaving women to coordinate alone.</p>
+        </div>
+        <div class="pain-card">
+          <div class="idx">05</div>
+          <h3>Emergency panic</h3>
+          <p>Bleeding, contractions, or sharp pain — and no immediate one-tap path to help.</p>
+        </div>
+        <div class="pain-card">
+          <div class="idx">06</div>
+          <h3>No central timeline</h3>
+          <p>Where am I in this week? What's coming next? No app holds the full arc clearly.</p>
+        </div>
+        <div class="pain-card">
+          <div class="idx">07</div>
+          <h3>Generic diet advice</h3>
+          <p>One-size-fits-all nutrition that ignores trimester, IVF stage, blood group, and comorbidities.</p>
+        </div>
+        <div class="pain-card">
+          <div class="idx">08</div>
+          <h3>Post-scan anxiety</h3>
+          <p>Reports filled with terms no one explains. Hours of fear before the next consultation.</p>
+        </div>
+        <div class="pain-card">
+          <div class="idx">09</div>
+          <h3>Rural & first-time gap</h3>
+          <p>Tier-2/3 cities and first-time mothers lack trusted guidance throughout the journey.</p>
+        </div>
+      </div>
+
+      <div class="pullquote">
+        <div class="pullquote-text">No woman should have to be her own <em>project manager</em>, <em>medical librarian</em>, and <em>emotional translator</em> through the most consequential year of her life.</div>
+        <div class="pullquote-attr">— The Problem, Stated Plainly</div>
+      </div>
+    </section>
+
+    <!-- ============ SOLUTION ============ -->
+    <section class="panel" id="solution">
+      <div class="eyebrow">Chapter Three · The Solution</div>
+      <h1 class="display">A calm, intelligent companion <em>that holds everything.</em></h1>
+      <p class="lead">One app. One timeline. One emotionally-aware system that tracks the treatment, stores the reports, prepares the family, and stays beside the user from the first injection to the final scan.</p>
+
+      <h2>The product vision</h2>
+      <p class="intro">Imagine what Flo, Ovia, an IVF clinic's workflow, and a thoughtful health assistant would look like if they were a single product — designed not for engagement loops but for trust. That is the product.</p>
+
+      <div class="two-col">
+        <div>
+          <h4>Built around the user</h4>
+          <p>Every screen is shaped by the question, <em>"What does she need right now — practically, medically, emotionally?"</em> Not what will hold her attention. What will hold her up.</p>
+        </div>
+        <div>
+          <h4>Built for the journey</h4>
+          <p>The product moves with the user across phases: ovarian stimulation → retrieval → transfer → confirmation → trimester one, two, three → delivery → early postpartum.</p>
+        </div>
+      </div>
+
+      <h2>The seven things it does <em>differently</em></h2>
+
+      <div class="detail-line">
+        <div class="key">01 · Pregnancy Timeline</div>
+        <div class="val">Week-by-week journey with milestones, upcoming tests, and a due-date countdown — a single visual home for the entire pregnancy.</div>
+      </div>
+      <div class="detail-line">
+        <div class="key">02 · IVF Cycle Management</div>
+        <div class="val">Full stimulation, retrieval, embryo, and transfer tracking. Injection reminders. Follicle scan logs. Hormone trends. The heart of the differentiation.</div>
+      </div>
+      <div class="detail-line">
+        <div class="key">03 · Smart Scan Analysis</div>
+        <div class="val">Upload ultrasounds and blood reports. AI extracts values, plots trends, explains terminology — always in <em>educational</em>, never diagnostic, language.</div>
+      </div>
+      <div class="detail-line">
+        <div class="key">04 · Emergency Mode</div>
+        <div class="val">One-tap access to husband, doctor, ambulance, and live location. Nearby maternity care, NICU hospitals, and blood banks surfaced instantly.</div>
+      </div>
+      <div class="detail-line">
+        <div class="key">05 · Personalized Diet & Wellness</div>
+        <div class="val">Nutrition shaped by trimester, IVF stage, blood group, Hb, thyroid status, vegetarian preference — not a generic checklist.</div>
+      </div>
+      <div class="detail-line">
+        <div class="key">06 · Husband / Family Mode</div>
+        <div class="val">A parallel companion view so partners and family are aligned with the schedule, the symptoms, and the emotional context of each week.</div>
+      </div>
+      <div class="detail-line">
+        <div class="key">07 · Medical Vault & Mental Wellness</div>
+        <div class="val">Secure, searchable storage for every report. Mood tracking, guided audio, and community for the anxiety no one else in the room can hold.</div>
+      </div>
+
+      <div class="positioning">
+        <div class="label">Positioning Statement</div>
+        <div class="stmt">The intelligent companion for <em>every step</em> — from the first injection of IVF to the first cry of the baby.</div>
+      </div>
+    </section>
+
+    <!-- ============ FEATURES ============ -->
+    <section class="panel" id="features">
+      <div class="eyebrow">Chapter Four · Features</div>
+      <h1 class="display">Eight modules. <em>One companion.</em></h1>
+      <p class="lead">Each feature is designed to remove one specific weight from the user's mind — a missed reminder, a misunderstood report, an unsafe moment, an isolating thought.</p>
+
+      <div class="feature-block">
+        <div class="feature-num">01</div>
+        <div class="feature-body">
+          <span class="tag">Core · Visual</span>
+          <h3>Pregnancy Timeline Dashboard</h3>
+          <p>A single visual journey of the entire pregnancy: where she is, what's next, what's coming, what was. Friendly and human in tone, clinical in accuracy.</p>
+        </div>
+        <ul class="feature-list">
+          <li>Week-by-week growth visualization</li>
+          <li>"Your baby is the size of a mango"</li>
+          <li>Upcoming test reminders & milestones</li>
+          <li>Due-date countdown and trimester arc</li>
+          <li>Mother's health markers in context</li>
+        </ul>
+      </div>
+
+      <div class="feature-block">
+        <div class="feature-num">02</div>
+        <div class="feature-body">
+          <span class="tag">Differentiator · IVF</span>
+          <h3>IVF Cycle Management</h3>
+          <p>The strongest, most defensible piece of the product. Few apps go deep here — fewer still do it with clinical respect and emotional fluency.</p>
+        </div>
+        <ul class="feature-list">
+          <li>Ovarian stimulation calendar</li>
+          <li>Injection reminders (time + dose)</li>
+          <li>Follicle scan tracking</li>
+          <li>Egg retrieval & embryo grading</li>
+          <li>Embryo transfer & FET tracking</li>
+          <li>Hormone trend monitoring</li>
+        </ul>
+      </div>
+
+      <div class="feature-block">
+        <div class="feature-num">03</div>
+        <div class="feature-body">
+          <span class="tag">AI · Careful</span>
+          <h3>Smart Scan & Report Reading</h3>
+          <p>Users upload ultrasounds and lab reports; the AI extracts values, plots trends, and explains terms in plain language. Educational — never diagnostic.</p>
+        </div>
+        <ul class="feature-list">
+          <li>OCR extraction from scans / PDFs</li>
+          <li>Trend visualization across cycles</li>
+          <li>Plain-language explanations</li>
+          <li>Risk-flag suggestions (escalate, never diagnose)</li>
+          <li>Doctor-share view for consultations</li>
+        </ul>
+      </div>
+
+      <div class="feature-block">
+        <div class="feature-num">04</div>
+        <div class="feature-body">
+          <span class="tag">Safety · Critical</span>
+          <h3>Emergency Pregnancy Mode</h3>
+          <p>One screen. One tap. The right contact, the right hospital, the right people informed — instantly. This single feature can justify the product.</p>
+        </div>
+        <ul class="feature-list">
+          <li>One-tap call: husband, doctor, ambulance</li>
+          <li>Auto-share live location</li>
+          <li>Nearby gynec hospitals & NICU centers</li>
+          <li>24/7 maternity care & blood banks</li>
+          <li>Quick-log: bleeding, contractions, BP</li>
+        </ul>
+      </div>
+
+      <div class="feature-block">
+        <div class="feature-num">05</div>
+        <div class="feature-body">
+          <span class="tag">Wellness · Personalized</span>
+          <h3>Diet & Wellness Engine</h3>
+          <p>Personalized to trimester, IVF stage, age, weight, blood group, Hb levels, thyroid/diabetes status, and dietary preference. Not a generic chart.</p>
+        </div>
+        <ul class="feature-list">
+          <li>Daily meal suggestions</li>
+          <li>Water, sleep, and movement tracking</li>
+          <li>Supplement guidance</li>
+          <li>Prenatal yoga & guided meditation</li>
+          <li>Tailored for veg / non-veg / Indian diets</li>
+        </ul>
+      </div>
+
+      <div class="feature-block">
+        <div class="feature-num">06</div>
+        <div class="feature-body">
+          <span class="tag">Family · Emotional</span>
+          <h3>Husband / Family Companion Mode</h3>
+          <p>A parallel companion view for partners and family — appointments, symptoms, weekly emotional context. Quietly transformative for engagement and retention.</p>
+        </div>
+        <ul class="feature-list">
+          <li>Synced appointment view</li>
+          <li>"What she may feel this week" guidance</li>
+          <li>Support tips & conversation starters</li>
+          <li>Shared medical vault access</li>
+          <li>Emergency-call inclusion</li>
+        </ul>
+      </div>
+
+      <div class="feature-block">
+        <div class="feature-num">07</div>
+        <div class="feature-body">
+          <span class="tag">Vault · Secure</span>
+          <h3>Medical Records Vault</h3>
+          <p>Every scan, every report, every prescription, every IVF document — encrypted, searchable, organized chronologically.</p>
+        </div>
+        <ul class="feature-list">
+          <li>Scans, reports, prescriptions</li>
+          <li>IVF protocol documents</li>
+          <li>Insurance papers</li>
+          <li>Timeline-based & searchable</li>
+          <li>Doctor-share via temporary links</li>
+        </ul>
+      </div>
+
+      <div class="feature-block">
+        <div class="feature-num">08</div>
+        <div class="feature-body">
+          <span class="tag">Mental Health · Quiet</span>
+          <h3>Mental Wellness Layer</h3>
+          <p>Pregnancy and IVF anxiety are real, under-served, and clinically significant. A soft, daily layer of support across the entire journey.</p>
+        </div>
+        <ul class="feature-list">
+          <li>Mood tracking with gentle prompts</li>
+          <li>Guided meditation & breathing</li>
+          <li>Anonymous community spaces</li>
+          <li>Daily reassurance & affirmations</li>
+          <li>Optional therapist referrals</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ IVF SPOTLIGHT ============ -->
+    <section class="panel" id="ivf">
+      <div class="eyebrow">Chapter Five · The Strongest Part</div>
+      <h1 class="display">IVF is the wedge. <em>Everything else follows.</em></h1>
+      <p class="lead">Pregnancy tracking is a crowded space. IVF management is a wide-open one — with deeper unmet need, higher willingness to pay, and a real path to clinic partnerships.</p>
+
+      <div class="spotlight">
+        <div class="spotlight-ribbon">Strategic Wedge</div>
+        <h3 style="font-size: 28px; margin-bottom: 16px;">Why IVF first</h3>
+        <p style="font-size: 16px; max-width: 780px;">An IVF cycle is one of the most emotionally and operationally intense experiences in modern medicine. Patients are highly engaged, deeply anxious, and willing to pay for clarity. And clinics need a way to keep adherence high once patients leave their building.</p>
+
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 32px;">
+          <div>
+            <div style="font-family: 'Fraunces', serif; font-size: 40px; color: var(--wine); font-weight: 300; line-height: 1;">↑</div>
+            <h5 style="font-family: 'Fraunces', serif; font-size: 16px; margin: 8px 0 4px;">Emotional value</h5>
+            <p style="font-size: 13px; margin: 0;">Each cycle costs time, money, and hope. Clarity is priceless.</p>
+          </div>
+          <div>
+            <div style="font-family: 'Fraunces', serif; font-size: 40px; color: var(--wine); font-weight: 300; line-height: 1;">$</div>
+            <h5 style="font-family: 'Fraunces', serif; font-size: 16px; margin: 8px 0 4px;">Willingness to pay</h5>
+            <p style="font-size: 13px; margin: 0;">Patients invest significantly per cycle; software is a small marginal cost.</p>
+          </div>
+          <div>
+            <div style="font-family: 'Fraunces', serif; font-size: 40px; color: var(--wine); font-weight: 300; line-height: 1;">∞</div>
+            <h5 style="font-family: 'Fraunces', serif; font-size: 16px; margin: 8px 0 4px;">Engagement</h5>
+            <p style="font-size: 13px; margin: 0;">Daily injections, frequent scans — built-in repeat usage.</p>
+          </div>
+          <div>
+            <div style="font-family: 'Fraunces', serif; font-size: 40px; color: var(--wine); font-weight: 300; line-height: 1;">⊕</div>
+            <h5 style="font-family: 'Fraunces', serif; font-size: 16px; margin: 8px 0 4px;">B2B opening</h5>
+            <p style="font-size: 13px; margin: 0;">Fertility clinics will pay for adherence and retention tools.</p>
+          </div>
+        </div>
+      </div>
+
+      <h2>The IVF journey — <em>tracked clearly</em></h2>
+      <div class="ivf-timeline">
+        <div class="timeline-step">
+          <div class="step-num">PHASE 01</div>
+          <h5>Stimulation</h5>
+          <p>Daily injections, hormone monitoring, follicle scans</p>
+        </div>
+        <div class="timeline-step">
+          <div class="step-num">PHASE 02</div>
+          <h5>Trigger</h5>
+          <p>Trigger shot timing, retrieval prep</p>
+        </div>
+        <div class="timeline-step">
+          <div class="step-num">PHASE 03</div>
+          <h5>Retrieval</h5>
+          <p>Egg retrieval log, fertilization status</p>
+        </div>
+        <div class="timeline-step">
+          <div class="step-num">PHASE 04</div>
+          <h5>Embryo Lab</h5>
+          <p>Day 3, blastocyst, grading, freezing</p>
+        </div>
+        <div class="timeline-step">
+          <div class="step-num">PHASE 05</div>
+          <h5>Transfer</h5>
+          <p>Fresh or frozen transfer scheduling</p>
+        </div>
+        <div class="timeline-step">
+          <div class="step-num">PHASE 06</div>
+          <h5>Two-Week Wait</h5>
+          <p>Support, tracking, beta-hCG confirmation</p>
+        </div>
+      </div>
+
+      <h2>What this unlocks</h2>
+      <div class="two-col">
+        <div>
+          <h4>For the patient</h4>
+          <p>No more guessing whether she took the right injection at the right time. No more mentally reconstructing a hormone trend across three lab reports. No more carrying the entire treatment in her head.</p>
+        </div>
+        <div>
+          <h4>For the clinic</h4>
+          <p>Higher adherence. Fewer missed protocols. A shared timeline with patients between visits. A SaaS-grade tool for tracking outcomes — and a co-branded touchpoint outside the clinic.</p>
+        </div>
+      </div>
+
+      <div class="pullquote">
+        <div class="pullquote-text">Every other pregnancy app treats <em>week 8</em> the same. None of them treat <em>day 9 of stimulation</em> at all.</div>
+        <div class="pullquote-attr">— Market Gap</div>
+      </div>
+    </section>
+
+    <!-- ============ MVP ROADMAP ============ -->
+    <section class="panel" id="mvp">
+      <div class="eyebrow">Chapter Six · MVP Roadmap</div>
+      <h1 class="display">Do <em>not</em> start with the AI.</h1>
+      <p class="lead">The temptation will be to ship the smart scan reader first because it's exciting. Resist it. Ship the boring, indispensable spine first — and earn the right to be intelligent.</p>
+
+      <div class="roadmap">
+        <div class="phase">
+          <div class="phase-tag">Phase One</div>
+          <h3>The Spine</h3>
+          <div class="duration">Months 0–4 · MVP launch</div>
+          <p style="font-size: 14px;">The essentials that make the product trustworthy and useful from day one. No AI. No models. Just dependable rails.</p>
+          <ul>
+            <li>Pregnancy timeline (week-by-week)</li>
+            <li>IVF cycle reminders & injection logs</li>
+            <li>Appointment tracking</li>
+            <li>Medication reminders</li>
+            <li>Scan & report upload (vault)</li>
+            <li>Husband / family companion mode</li>
+            <li>Emergency contacts & one-tap call</li>
+          </ul>
+        </div>
+
+        <div class="phase">
+          <div class="phase-tag">Phase Two</div>
+          <h3>The Intelligence</h3>
+          <div class="duration">Months 4–10 · Smart layer</div>
+          <p style="font-size: 14px;">Layer in personalization and AI carefully, with strong guardrails and doctor-in-the-loop wherever the answer could be misread.</p>
+          <ul>
+            <li>OCR for reports & scans</li>
+            <li>Hormone trend visualization</li>
+            <li>Plain-language report explanations</li>
+            <li>Personalized diet engine</li>
+            <li>Doctor-share view</li>
+            <li>Mood & wellness tracking</li>
+          </ul>
+        </div>
+
+        <div class="phase">
+          <div class="phase-tag">Phase Three</div>
+          <h3>The Ecosystem</h3>
+          <div class="duration">Months 10–18+ · Platform</div>
+          <p style="font-size: 14px;">Expand outward: clinics, wearables, predictive features, deeper community. This is where defensibility compounds.</p>
+          <ul>
+            <li>Clinic SaaS dashboard</li>
+            <li>Risk-pattern alerts (educational)</li>
+            <li>Smart in-app chatbot</li>
+            <li>Wearable & glucose integrations</li>
+            <li>Fetal movement & contraction timers</li>
+            <li>Insurance partnerships</li>
+          </ul>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <h2>The launch principle</h2>
+      <p class="intro">Pick one strong wedge: <strong>IVF patients in a single city, partnered with two or three fertility clinics</strong>. Solve their problem completely. Earn loyalty. Expand outward into general pregnancy once retention is proven.</p>
+    </section>
+
+    <!-- ============ BUSINESS MODEL ============ -->
+    <section class="panel" id="business">
+      <div class="eyebrow">Chapter Seven · Business Model</div>
+      <h1 class="display">Three revenue streams. <em>One reinforces the next.</em></h1>
+      <p class="lead">Consumer subscriptions establish daily love. Clinic partnerships unlock recurring B2B revenue. Insurance partnerships compound the data flywheel. Each stream strengthens the others.</p>
+
+      <div class="model-grid">
+        <div class="model-card">
+          <div class="model-tier">Stream One</div>
+          <h3>B2C Subscription</h3>
+          <p style="font-size: 14px; margin-bottom: 16px;">A freemium app with a premium tier for users who want deeper intelligence and unlimited storage.</p>
+          <div class="pricing-strip">
+            <div class="price-block"><div class="price-amt">Free</div><div class="price-label">Basic</div></div>
+            <div class="price-block"><div class="price-amt">₹299</div><div class="price-label">Premium/mo</div></div>
+          </div>
+          <ul>
+            <li>AI-driven insights</li>
+            <li>Personalized diet plans</li>
+            <li>Unlimited medical vault</li>
+            <li>Doctor chat & second opinions</li>
+            <li>Family companion mode</li>
+          </ul>
+        </div>
+
+        <div class="model-card">
+          <div class="model-tier">Stream Two · Strongest</div>
+          <h3>Clinic SaaS</h3>
+          <p style="font-size: 14px; margin-bottom: 16px;">Fertility and gynec clinics pay a per-patient monthly fee for adherence, monitoring, and patient retention tools.</p>
+          <div class="pricing-strip">
+            <div class="price-block"><div class="price-amt">SaaS</div><div class="price-label">Per patient</div></div>
+            <div class="price-block"><div class="price-amt">B2B</div><div class="price-label">Recurring</div></div>
+          </div>
+          <ul>
+            <li>Patient adherence dashboard</li>
+            <li>Reminder automation</li>
+            <li>Cycle outcome tracking</li>
+            <li>Co-branded experience</li>
+            <li>Treatment monitoring</li>
+          </ul>
+        </div>
+
+        <div class="model-card">
+          <div class="model-tier">Stream Three</div>
+          <h3>Insurance Partnerships</h3>
+          <p style="font-size: 14px; margin-bottom: 16px;">Health insurers pay for pregnancy monitoring tools that reduce claim risk and improve maternal outcomes.</p>
+          <div class="pricing-strip">
+            <div class="price-block"><div class="price-amt">Enterprise</div><div class="price-label">Long-term</div></div>
+            <div class="price-block"><div class="price-amt">Data</div><div class="price-label">(With consent)</div></div>
+          </div>
+          <ul>
+            <li>Risk-pattern monitoring</li>
+            <li>Maternal outcome data</li>
+            <li>Member engagement tools</li>
+            <li>Bundled with maternity plans</li>
+            <li>Anonymized analytics</li>
+          </ul>
+        </div>
+      </div>
+
+      <h2>Why clinics will pay</h2>
+      <div class="two-col">
+        <div>
+          <h4>Adherence is their #1 outcome lever</h4>
+          <p>An IVF cycle's success depends heavily on patient adherence to injection and medication schedules. Clinics today rely on memory, paper, and well-meaning WhatsApp messages. A real adherence tool meaningfully improves outcomes.</p>
+        </div>
+        <div>
+          <h4>Retention is their #1 business lever</h4>
+          <p>A patient who feels supported between visits returns for follow-ups, recommends the clinic, and re-engages for subsequent cycles. The companion app becomes the clinic's relationship layer outside its walls.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TECH ============ -->
+    <section class="panel" id="tech">
+      <div class="eyebrow">Chapter Eight · Tech Stack</div>
+      <h1 class="display">A modern, healthcare-aware stack <em>built for trust.</em></h1>
+      <p class="lead">Cross-platform from day one. Cloud-first. Encrypted by default. AI is an additive layer — never the foundation.</p>
+
+      <div class="stack-row">
+        <div class="stack-label">Frontend</div>
+        <div class="stack-items">
+          <span class="chip primary">Flutter</span>
+          <span class="chip">React Native (alt)</span>
+          <span class="chip">Dart</span>
+          <span class="chip">Riverpod</span>
+        </div>
+      </div>
+
+      <div class="stack-row">
+        <div class="stack-label">Backend</div>
+        <div class="stack-items">
+          <span class="chip primary">Supabase</span>
+          <span class="chip">Firebase (alt)</span>
+          <span class="chip">PostgreSQL</span>
+          <span class="chip">Edge Functions</span>
+          <span class="chip">Row-level security</span>
+        </div>
+      </div>
+
+      <div class="stack-row">
+        <div class="stack-label">AI / ML</div>
+        <div class="stack-items">
+          <span class="chip primary">Python</span>
+          <span class="chip">TensorFlow</span>
+          <span class="chip">OpenCV</span>
+          <span class="chip">Tesseract OCR</span>
+          <span class="chip">LLM API (with guardrails)</span>
+        </div>
+      </div>
+
+      <div class="stack-row">
+        <div class="stack-label">Storage & Security</div>
+        <div class="stack-items">
+          <span class="chip primary">End-to-end encryption</span>
+          <span class="chip">HIPAA-aware patterns</span>
+          <span class="chip">DPDP-compliant (India)</span>
+          <span class="chip">Audit logs</span>
+        </div>
+      </div>
+
+      <div class="stack-row">
+        <div class="stack-label">Communications</div>
+        <div class="stack-items">
+          <span class="chip">Twilio (SMS, calls)</span>
+          <span class="chip">Push (FCM/APNs)</span>
+          <span class="chip">WhatsApp Business API</span>
+        </div>
+      </div>
+
+      <div class="stack-row">
+        <div class="stack-label">Infrastructure</div>
+        <div class="stack-items">
+          <span class="chip">AWS / GCP (regional)</span>
+          <span class="chip">CloudFront CDN</span>
+          <span class="chip">Sentry monitoring</span>
+          <span class="chip">PostHog analytics</span>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <h2>Design principles</h2>
+      <div class="detail-line">
+        <div class="key">Trust first</div>
+        <div class="val">Every decision — UX, copy, AI — defaults to caution over confidence.</div>
+      </div>
+      <div class="detail-line">
+        <div class="key">Offline-tolerant</div>
+        <div class="val">Reminders, vault access, and emergency contacts work without connectivity.</div>
+      </div>
+      <div class="detail-line">
+        <div class="key">Locally compliant</div>
+        <div class="val">DPDP for India, HIPAA-aware patterns, full consent layers and data export.</div>
+      </div>
+      <div class="detail-line">
+        <div class="key">Doctor-in-the-loop</div>
+        <div class="val">Any AI inference that touches health is paired with a "see your doctor" path.</div>
+      </div>
+    </section>
+
+    <!-- ============ RISKS ============ -->
+    <section class="panel" id="risks">
+      <div class="eyebrow">Chapter Nine · Risks & Mitigation</div>
+      <h1 class="display">The biggest threats are <em>not technical.</em></h1>
+      <p class="lead">Healthcare products fail on accuracy, privacy, and overreach — not on speed or features. Naming each risk plainly is the start of designing around it.</p>
+
+      <div class="risk-list">
+        <div class="risk-item">
+          <div class="risk-num">01</div>
+          <div class="risk-content">
+            <h3>Medical accuracy</h3>
+            <p>Any miscommunicated value, threshold, or warning carries real harm. The product must be built with — not around — medical experts.</p>
+          </div>
+          <div class="risk-mitigation">
+            <span class="mit-label">Mitigation</span>
+            Clinical advisory board of gynecologists and IVF specialists. Legal review on every health-adjacent feature. Disclaimers calibrated by lawyers, not marketers.
+          </div>
+        </div>
+
+        <div class="risk-item">
+          <div class="risk-num">02</div>
+          <div class="risk-content">
+            <h3>Privacy & security</h3>
+            <p>This product holds among the most sensitive personal data possible — fertility records, miscarriage history, mental health logs.</p>
+          </div>
+          <div class="risk-mitigation">
+            <span class="mit-label">Mitigation</span>
+            End-to-end encryption, regional data residency, granular consent controls, regular penetration testing, and an explicit "delete everything" path.
+          </div>
+        </div>
+
+        <div class="risk-item">
+          <div class="risk-num">03</div>
+          <div class="risk-content">
+            <h3>AI overreach</h3>
+            <p>The app must never say "your baby is unhealthy" or "miscarriage likely." Even probability-based phrasing creates harm.</p>
+          </div>
+          <div class="risk-mitigation">
+            <span class="mit-label">Mitigation</span>
+            Strict guardrails: AI outputs use educational, range-aware language only — "this value appears outside the usual range; consult your doctor." Never diagnostic.
+          </div>
+        </div>
+
+        <div class="risk-item">
+          <div class="risk-num">04</div>
+          <div class="risk-content">
+            <h3>Regulatory shift</h3>
+            <p>Digital health regulations are tightening globally. India's DPDP Act, EU's MDR, US FDA's SaMD frameworks are all evolving.</p>
+          </div>
+          <div class="risk-mitigation">
+            <span class="mit-label">Mitigation</span>
+            Build to the strictest applicable regime from day one. Modular consent layers. Compliance as a feature, not a checkbox.
+          </div>
+        </div>
+
+        <div class="risk-item">
+          <div class="risk-num">05</div>
+          <div class="risk-content">
+            <h3>Trust & adoption</h3>
+            <p>Women — especially in tier-2/3 cities — must believe this app is safe, private, and not a sales funnel for hospitals.</p>
+          </div>
+          <div class="risk-mitigation">
+            <span class="mit-label">Mitigation</span>
+            Transparent data policy in plain language. Clinic referrals only with explicit opt-in. No ad-based monetization on health content.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BRAND ============ -->
+    <section class="panel" id="brand">
+      <div class="eyebrow">Chapter Ten · Brand Identity</div>
+      <h1 class="display">The name should feel <em>warm, trustworthy, motherly.</em></h1>
+      <p class="lead">It shouldn't sound like a clinic, an app, or a startup. It should sound like someone you would want beside you on the day your test came back.</p>
+
+      <h2>Working name explorations</h2>
+      <div class="brand-grid">
+        <div class="brand-tile">
+          <div class="brand-tile-name">Nurtura</div>
+          <div class="brand-tile-mean">to nurture</div>
+        </div>
+        <div class="brand-tile">
+          <div class="brand-tile-name">Oviora</div>
+          <div class="brand-tile-mean">soft + ova</div>
+        </div>
+        <div class="brand-tile">
+          <div class="brand-tile-name">Hita</div>
+          <div class="brand-tile-mean">well-being</div>
+        </div>
+        <div class="brand-tile">
+          <div class="brand-tile-name">Embrya</div>
+          <div class="brand-tile-mean">beginnings</div>
+        </div>
+        <div class="brand-tile">
+          <div class="brand-tile-name">AroMama</div>
+          <div class="brand-tile-mean">around-mother</div>
+        </div>
+        <div class="brand-tile">
+          <div class="brand-tile-name">BloomNest</div>
+          <div class="brand-tile-mean">growing softly</div>
+        </div>
+        <div class="brand-tile">
+          <div class="brand-tile-name">Momvia</div>
+          <div class="brand-tile-mean">mother's path</div>
+        </div>
+        <div class="brand-tile">
+          <div class="brand-tile-name">VedaMaa</div>
+          <div class="brand-tile-mean">knowledge-mother</div>
+        </div>
+        <div class="brand-tile">
+          <div class="brand-tile-name">LittlePulse</div>
+          <div class="brand-tile-mean">first heartbeat</div>
+        </div>
+        <div class="brand-tile">
+          <div class="brand-tile-name">NilaCare</div>
+          <div class="brand-tile-mean">moonlight, calm</div>
+        </div>
+      </div>
+
+      <h2>The brand tone</h2>
+      <div class="two-col">
+        <div>
+          <h4>What it sounds like</h4>
+          <p>Warm without being syrupy. Clear without being clinical. Steady without being detached. The voice of a knowledgeable, calming presence who has been through this many times — and who is fully on your side.</p>
+        </div>
+        <div>
+          <h4>What it does <em>not</em> sound like</h4>
+          <p>Not pink-and-rainbows. Not tech-bro confident. Not hospital-cold. Not influencer-cheerful. Not patronizing to women who are managing more in a single week than most apps will manage in their lifetime.</p>
+        </div>
+      </div>
+
+      <div class="positioning">
+        <div class="label">The one line</div>
+        <div class="stmt">One intelligent companion. <em>From the first injection to the first cry.</em></div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  const tabs = document.querySelectorAll('.tab-btn');
+  const panels = document.querySelectorAll('.panel');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.tab;
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      const targetPanel = document.getElementById(target);
+      if (targetPanel) {
+        targetPanel.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
